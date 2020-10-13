@@ -6,14 +6,14 @@ copy fwlib32.h /usr/include/
 run ln -s /usr/local/lib/libfwlib32.so.1.0.5 /usr/local/lib/libfwlib32.so && \
   ldconfig && \
   dpkg --add-architecture armhf && \
-  apt-get update && apt-get install -y libc6-dev:armhf
+  apt-get update && apt-get install -y \
+    libc6-dev:armhf \
+    gcc-arm-linux-gnueabihf
 
-env LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/arm-linux-gnueabihf/lib/
 
 from base as builder
 
-run apt-get install -y cmake build-essential gcc-arm-linux-gnueabihf libc6-dev:armhf
-
+run apt-get install -y cmake build-essential 
 workdir /usr/src/fwlib-example
 copy . .
 
@@ -24,6 +24,7 @@ run mkdir build && \
 
 from base
 
+env LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/arm-linux-gnueabihf/lib/
 copy --from=builder /usr/src/fwlib-example/build/bin/fanuc_example /usr/local/bin/
 
 cmd fanuc_example
