@@ -18,7 +18,7 @@ copy . .
 
 run mkdir build && \
   cd build && \
-  CC=arm-linux-gnueabihf-gcc cmake ..
+  CC=arm-linux-gnueabihf-gcc cmake .. && \
   make
 
 from base
