@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.13.4)
-project(AnotherFanucExample LANGUAGES C VERSION 0.1)
+project(AnotherFanucExample LANGUAGES C CXX VERSION 0.1)
 
 add_subdirectory(src)
+
+enable_testing()
+include(GoogleTest)
+add_subdirectory(test)
 
 set_target_properties(fanuc_example
     PROPERTIES
