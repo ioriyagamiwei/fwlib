@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "fwlib32.h"
+
+#include "../../fwlib32.h"
 
 unsigned short libh;
 
