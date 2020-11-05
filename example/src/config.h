@@ -11,6 +11,7 @@ typedef struct config {
 } Config;
 
 int set_config_defaults(struct config *conf);
+int read_config(int argc, char *argv[], struct config *conf);
 int read_arg_config(int argc, char *argv[], struct config *conf);
 int read_env_config(struct config *conf);
 int read_file_config(const char *cfg_file, struct config *conf);

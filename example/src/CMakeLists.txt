@@ -20,4 +20,4 @@ else()
 endif()
 
 
-target_link_libraries(fanuc_example m fwlib32 pthread)
+target_link_libraries(fanuc_example m fwlib32 pthread config)

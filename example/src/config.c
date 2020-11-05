@@ -4,13 +4,9 @@ extern const char *deviceIP;
 extern int devicePort;
 const char DEFAULT_IP[] = "127.0.0.1";
 
-// loop through defaults
-// loop through file
-// loop through env
-// loop through args
-
 static struct option options[] = {{"ip", optional_argument, NULL, 'h'},
                                   {"port", optional_argument, NULL, 'p'},
+                                  {"config", optional_argument, NULL, 'c'},
                                   {NULL, 0, NULL, 0}};
 
 int set_config_defaults(struct config *conf) {
@@ -34,6 +30,11 @@ int read_arg_config(int argc, char *argv[], struct config *conf) {
       case 'p':
         if ((tmp = atoi(optarg)) != 0) {
           conf->port = tmp;
+        }
+        break;
+      case 'c':
+        if (read_file_config(optarg, conf)) {
+          return 1;
         }
         break;
 
@@ -83,10 +84,8 @@ int read_file_config(const char *cfg_file, struct config *conf) {
   return 0;
 }
 
-int read_config(int argc, char *argv[], const char *cfg_file,
-                struct config *conf) {
+int read_config(int argc, char *argv[], struct config *conf) {
   set_config_defaults(conf);
-  read_file_config(cfg_file, conf);
   read_env_config(conf);
   read_arg_config(argc, argv, conf);
 

@@ -5,12 +5,13 @@
 #include "../src/config.c"
 
 int main(int argc, char *argv[]) {
-  char *test_args[] = {"test_arg_config", "--ip=123.456.789.1"};
+  char *test_args[] = {"test_arg_config", "--ip=123.456.789.1",
+                       "--config=test_config.cfg"};
   int ret;
   Config conf;
 
   // setenv("", "", 1);
-  ret = read_config(2, test_args, "test_config.cfg", &conf);
+  ret = read_config(2, test_args, &conf);
   if (ret != 0) {
     fprintf(stderr, "read_config failed!\n");
     exit(1);
