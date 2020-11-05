@@ -13,6 +13,13 @@ static struct option options[] = {{"ip", optional_argument, NULL, 'h'},
                                   {"port", optional_argument, NULL, 'p'},
                                   {NULL, 0, NULL, 0}};
 
+int set_config_defaults(struct config *conf) {
+  strcpy(conf->ip, "127.0.0.1");
+  conf->port = 8193;
+
+  return 0;
+}
+
 int read_arg_config(int argc, char *argv[], struct config *conf) {
   int c;
   int i = 0;
@@ -72,6 +79,16 @@ int read_file_config(const char *cfg_file, struct config *conf) {
   config_lookup_int(&cfg, "port", &conf->port);
 
   config_destroy(&cfg);
+
+  return 0;
+}
+
+int read_config(int argc, char *argv[], const char *cfg_file,
+                struct config *conf) {
+  set_config_defaults(conf);
+  read_file_config(cfg_file, conf);
+  read_env_config(conf);
+  read_arg_config(argc, argv, conf);
 
   return 0;
 }
