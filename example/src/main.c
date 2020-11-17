@@ -19,10 +19,10 @@ int main(int argc, char *argv[]) {
   Config conf;
 
   if (read_config(argc, argv, &conf)) {
-    fprintf(
-        stderr,
-        "%s --config=<path_to_config> --port=<device port> --ip=<device ip>",
-        argv[0]);
+    fprintf(stderr,
+            "usage: %s --config=<path_to_config> --port=<device port> "
+            "--ip=<device ip>\n",
+            argv[0]);
     return 1;
   }
 
