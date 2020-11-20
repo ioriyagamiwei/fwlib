@@ -1,17 +1,21 @@
 #include "./config.h"
 
+#ifndef _WIN32
 #include <getopt.h>
+#endif
 #include <libconfig.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
+const Config default_config = {"127.0.0.1", 8193};
+
+#ifndef _WIN32
 static struct option options[] = {{"ip", required_argument, NULL, 'h'},
                                   {"port", required_argument, NULL, 'p'},
                                   {"config", required_argument, NULL, 'c'},
                                   {NULL, 0, NULL, 0}};
 
-const Config default_config = {"127.0.0.1", 8193};
 
 int read_arg_config(int argc, char *argv[], Config *conf) {
   int c;
@@ -57,6 +61,7 @@ int read_arg_config(int argc, char *argv[], Config *conf) {
 
   return 0;
 }
+#endif
 
 int read_env_config(Config *conf) {
   int iTmp;
@@ -97,9 +102,14 @@ int read_file_config(const char *cfg_file, Config *conf) {
 
 int read_config(int argc, char *argv[], Config *conf) {
   Config a = default_config;
-  if (read_env_config(&a) || read_arg_config(argc, argv, &a)) {
+  if (read_env_config(&a)) {
     return 1;
   }
+#ifdef _WIN32
+  if (read_arg_config(argc, argv, &a)) {
+    return 1;
+  }
+#endif
   *conf = a;
   return 0;
 }

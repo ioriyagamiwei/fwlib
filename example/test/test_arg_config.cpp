@@ -4,6 +4,7 @@
 #include "../src/config.c"
 #include "gtest/gtest.h"
 
+#ifndef _WIN32
 static Config INIT_VALUE = {"1.2.3.4", 1234};
 
 TEST(Config, ArgConfigWorks) {
@@ -29,3 +30,4 @@ TEST(Config, ArgConfigWorks) {
   EXPECT_STREQ(conf.ip, INIT_VALUE.ip) << "ip should be unmodified";
   EXPECT_EQ(conf.port, INIT_VALUE.port) << "port should be unmodified";
 }
+#endif
